@@ -27,6 +27,7 @@ public class PercentageSlider extends JSlider implements PercentageView {
 		// The model must be updated
 		addChangeListener(
 			new ChangeListener() {
+
 				public void stateChanged(ChangeEvent e) {
 					myModel.setValue(getValue() / 100F);
 				}
