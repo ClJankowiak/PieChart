@@ -3,15 +3,14 @@ package piechart;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import javax.swing.JComponent;
 
-
-/* for "controller" behaviour
+/* for "controller" behaviour */
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
- */
 
 /**
  * A PercentagePieChart acts as a MVC View of a Percentage
@@ -32,15 +31,22 @@ public class PercentagePieChart extends JComponent implements PercentageView {
 	public PercentagePieChart(PercentageModel model) {
 		super();
 		myModel = model;
-		/* For "controller" behaviour
+                //DEBUT /* For "controller" behaviour
+		
 		addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
+                            if(inPin(e))
+                                myModel.setValue(pointToPercentage(e));
 			}
 
 			public void mousePressed(MouseEvent e) {
+                              if(inPin(e))
+                                myModel.setValue(pointToPercentage(e));
 			}
 
 			public void mouseReleased(MouseEvent e) {
+                            myModel.setValue(pointToPercentage(e));
+
 			}
 
 			public void mouseEntered(MouseEvent e) {
@@ -52,13 +58,17 @@ public class PercentagePieChart extends JComponent implements PercentageView {
 		});
 	        addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
+                                myModel.setValue(pointToPercentage(e));
 			}
 
 			public void mouseMoved(MouseEvent e) {
+                            if(inPin(e))
+                                myModel.setValue(pointToPercentage(e));
 			}
 
 		});
-		 */
+		 
+                //FIN
 	}
 
 	// "View" behaviour : when the percentage changes, the piechart must be repainted
@@ -69,29 +79,26 @@ public class PercentagePieChart extends JComponent implements PercentageView {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		// On calcule le centre du cercle
 		int centerX = this.getWidth() / 2;
 		int centerY = this.getHeight() / 2;
-		// On calcule le rayon du cercle
 		int radius = Math.min(getWidth() - 4, getHeight() - 4) / 2;
-		// On calcule l'angle de la part de camembert
 		double angle = myModel.getValue() * 2 * Math.PI;
-		// On trace le cercle
-		g.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
-		// On trace la part de camembert
+
+		g.fillOval(centerX - radius, centerY - radius, radius * 2,
+			   radius * 2);
 		g.setColor(Color.yellow);
 		g.fillArc(centerX - radius, centerY - radius, radius * 2,
 			  radius * 2, 0, (int) Math.toDegrees(angle));
-		// On dessine le "bouton"
+
 		int pinX = centerX + (int) (Math.cos(angle) * radius);
 		int pinY = centerY - (int) (Math.sin(angle) * radius);
 		g.setColor(Color.gray.brighter());
 		g.fill3DRect(pinX - 4, pinY - 4, 8, 8, true);
 	}
-/* for "controller" behaviour
-	/**
-	 * Test if a mouse event is inside the "Pin" that allows
-	 * to change the percentage
+//DEBUT
+        /* for "controller" behaviour
+	  Test if a mouse event is inside the "Pin" that allows
+	  to change the percentage */
 
 	private boolean inPin(MouseEvent ev) {
 		int mouseX = ev.getX();
@@ -108,8 +115,8 @@ public class PercentagePieChart extends JComponent implements PercentageView {
 		return r.contains(mouseX, mouseY);
 	}
 
-	/**
-	 * Converts a mouse position to a Percentage value
+	
+	// Converts a mouse position to a Percentage value
 	private float pointToPercentage(MouseEvent e) {
 		int centerX = this.getWidth() / 2;
 		int centerY = this.getHeight() / 2;
@@ -137,5 +144,6 @@ public class PercentagePieChart extends JComponent implements PercentageView {
 
 		return (float) (theta / (2 * Math.PI));
 	}
-*/
+
+        //FIN
 }
