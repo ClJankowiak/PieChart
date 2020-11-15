@@ -68,3 +68,5 @@ public class PercentageModel extends Percentage {
 				view.notify(this);
 	}
 }
+
+
