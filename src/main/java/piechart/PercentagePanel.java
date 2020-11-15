@@ -14,6 +14,7 @@ public class PercentagePanel extends JPanel {
 	PercentageModel myModel = new PercentageModel(.33F);
 	// A View of the myModel
 	PercentageLabel myTextView = new PercentageLabel();
+	// connect the view to the myModel
 	// A View and Controller of the myModel
 	PercentagePieChart myPieViewAndController = new PercentagePieChart(myModel);
 	// Another view and Controller
@@ -28,7 +29,7 @@ public class PercentagePanel extends JPanel {
 		JLabel jLabel1 = new JLabel();
 		jLabel1.setText("Percentage:");
 		myTextView.setEnabled(false);
-		myPieViewAndController.setPreferredSize(new Dimension(250, 100));
+		myPieViewAndController.setPreferredSize(new Dimension(90, 90));
 		northPanel.add(jLabel1, null);
 		northPanel.add(myTextView, null);
 		add(northPanel, BorderLayout.NORTH);
@@ -39,6 +40,6 @@ public class PercentagePanel extends JPanel {
 		myModel.addView(myTextView);
 		myModel.addView(myPieViewAndController);
 		myModel.addView(mySliderViewAndController);
-		//myModel.addView( new ConsoleView() );
+		myModel.addView( new ConsoleView() );
 	}
 }
