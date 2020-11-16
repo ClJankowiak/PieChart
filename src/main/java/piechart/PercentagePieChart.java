@@ -26,6 +26,7 @@ public class PercentagePieChart extends JComponent implements PercentageView {
 	 * Hold a reference to the model
 	 */
 	private final PercentageModel myModel;
+	boolean bool = false;
 
 
 	public PercentagePieChart(PercentageModel model) {
@@ -40,8 +41,11 @@ public class PercentagePieChart extends JComponent implements PercentageView {
 			}
 
 			public void mousePressed(MouseEvent e) {
-                              if(inPin(e))
-                                myModel.setValue(pointToPercentage(e));
+                              if(inPin(e)) {
+				      bool = true;
+			      } else {
+				      bool = false;
+			      }
 			}
 
 			public void mouseReleased(MouseEvent e) {
@@ -58,7 +62,8 @@ public class PercentagePieChart extends JComponent implements PercentageView {
 		});
 	        addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
-                                myModel.setValue(pointToPercentage(e));
+				if (bool) 
+                                    myModel.setValue(pointToPercentage(e));
 			}
 
 			public void mouseMoved(MouseEvent e) {
